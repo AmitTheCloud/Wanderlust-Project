@@ -14,6 +14,8 @@ spec:
       labels:
         app: wander-app
     spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
       containers:
       - name: web
         # Jenkins will replace this with actual image (see Jenkinsfile)
