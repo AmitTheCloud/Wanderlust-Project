@@ -36,10 +36,10 @@ pipeline {
 
         sshagent(['app-server-ssh']) {
           sh """
-            scp -o StrictHostKeyChecking=no deploy.tar.gz ${APP_SERVER}:~/
             ssh -o StrictHostKeyChecking=no ${APP_SERVER} '
-              tar -xzf deploy.tar.gz &&
-              kubectl apply -f out/
+            mkdir -p out &&
+            tar -xzf deploy.tar.gz -C out &&
+            kubectl apply -f out/
             '
           """
         }
