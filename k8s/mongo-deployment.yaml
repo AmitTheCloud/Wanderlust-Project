@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wander-mongo
+  labels:
+    app: wander-mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wander-mongo
+  template:
+    metadata:
+      labels:
+        app: wander-mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:6.0
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_DATABASE
+          value: wanderdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wander-mongo
+spec:
+  selector:
+    app: wander-mongo
+  ports:
+  - port: 27017
+    targetPort: 27017
+  type: ClusterIP

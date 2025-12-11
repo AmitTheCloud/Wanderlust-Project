@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wander-app
+  labels:
+    app: wander-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wander-app
+  template:
+    metadata:
+      labels:
+        app: wander-app
+    spec:
+      containers:
+      - name: web
+        # Jenkins will replace this with actual image (see Jenkinsfile)
+        image: DOCKERHUB_USER/wanderlust:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"
+        - name: MONGO_URI
+          value: "mongodb://wander-mongo:27017/wanderdb"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wander-app
+spec:
+  selector:
+    app: wander-app
+  ports:
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+  type: NodePort
+  # NodePort assigned dynamically; you can set nodePort: 30000 to fix it
