@@ -15,12 +15,6 @@ pipeline {
       }
     }
 
-    stage('Install deps (optional)') {
-      steps {
-        sh 'npm ci --no-audit --prefer-offline'
-      }
-    }
-
     stage('Build Docker image') {
       steps {
         script {
