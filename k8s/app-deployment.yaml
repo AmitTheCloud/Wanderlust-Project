@@ -17,7 +17,7 @@ spec:
       containers:
       - name: web
         # Jenkins will replace this with actual image (see Jenkinsfile)
-        image: DOCKERHUB_USER/wanderlust:latest
+        image: asolanki1811/wanderlust:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
